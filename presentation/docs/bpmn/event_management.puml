@@ -1,0 +1,76 @@
+@startuml
+!define BPMN(x) <b>x</b>
+title Event Management Process
+
+|Event Coordinator|
+start
+:Create Event Proposal;
+
+|System|
+:Validate Event Details;
+:Check Resource Requirements;
+:Verify Schedule Conflicts;
+
+|Garden Administrator|
+:Review Proposal;
+if (Approved?) then (yes)
+  :Set Event Status to Approved;
+else (no)
+  :Request Modifications;
+  |Event Coordinator|
+  :Revise Proposal;
+  goto Review Proposal;
+endif
+
+|System|
+:Open Registration;
+:Send Announcements;
+
+|Community Member|
+:View Event Details;
+if (Interested?) then (yes)
+  :Register for Event;
+  |System|
+  if (Space Available?) then (yes)
+    :Confirm Registration;
+    :Send Confirmation;
+  else (no)
+    :Add to Waiting List;
+    :Send Waitlist Notice;
+  endif
+else (no)
+  stop
+endif
+
+|Event Coordinator|
+:Monitor Registration;
+:Prepare Resources;
+
+|System|
+:Send Reminders;
+:Generate Attendance List;
+
+|Event Coordinator|
+:Execute Event;
+:Track Attendance;
+:Document Activities;
+
+|System|
+fork
+  :Update Participation Records;
+fork again
+  :Calculate Statistics;
+fork again
+  :Generate Reports;
+end fork
+
+|Event Coordinator|
+:Collect Feedback;
+:Submit Event Report;
+
+|System|
+:Process Feedback;
+:Archive Event Data;
+stop
+
+@enduml 

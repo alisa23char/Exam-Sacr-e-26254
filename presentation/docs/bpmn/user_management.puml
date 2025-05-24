@@ -1,0 +1,67 @@
+@startuml
+!define BPMN(x) <b>x</b>
+title User Management Process
+
+|Community Member|
+start
+:Submit Registration;
+:Provide Documentation;
+
+|System|
+:Validate Information;
+:Check Duplicates;
+if (Valid?) then (yes)
+  :Create Pending Account;
+else (no)
+  :Return Error Message;
+  stop
+endif
+
+|Garden Administrator|
+:Review Application;
+if (Approved?) then (yes)
+  :Assign Initial Role;
+else (no)
+  :Reject Application;
+  :Provide Reason;
+  stop
+endif
+
+|System|
+:Create User Account;
+:Generate Credentials;
+:Send Welcome Email;
+
+|Community Member|
+:Activate Account;
+:Complete Profile;
+
+|System|
+:Start Activity Tracking;
+
+|#AntiqueWhite|System|
+fork
+  :Monitor Participation;
+fork again
+  :Track Resource Usage;
+fork again
+  :Log Event Attendance;
+end fork
+:Calculate Contribution Score;
+
+|Garden Administrator|
+:Review Performance;
+if (Meets Criteria?) then (yes)
+  :Update Role/Privileges;
+else (no)
+  :Issue Warning;
+  :Set Probation Status;
+endif
+
+|System|
+:Update User Status;
+:Generate Reports;
+:Send Notifications;
+stop
+
+@enduml 

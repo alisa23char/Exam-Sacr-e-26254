@@ -1,0 +1,94 @@
+@startuml
+!define PROCESS(name) class name << Process >>
+!define ENTITY(name) class name << Entity >>
+
+title Community Garden Management System - Process Relationships
+
+' Define main processes
+PROCESS(PlotManagement) {
+  + Plot Application
+  + Plot Assignment
+  + Maintenance Tracking
+  + Compliance Monitoring
+}
+
+PROCESS(ResourceManagement) {
+  + Inventory Tracking
+  + Resource Allocation
+  + Usage Monitoring
+  + Threshold Management
+}
+
+PROCESS(EventManagement) {
+  + Event Planning
+  + Registration
+  + Execution
+  + Feedback Collection
+}
+
+PROCESS(UserManagement) {
+  + User Registration
+  + Role Management
+  + Activity Tracking
+  + Performance Monitoring
+}
+
+' Define key entities
+ENTITY(Plot) {
+  + plot_id
+  + status
+  + assigned_user
+  + maintenance_schedule
+}
+
+ENTITY(Resource) {
+  + resource_id
+  + quantity
+  + threshold
+  + status
+}
+
+ENTITY(Event) {
+  + event_id
+  + type
+  + date
+  + capacity
+}
+
+ENTITY(User) {
+  + user_id
+  + role
+  + status
+  + contribution_score
+}
+
+' Define relationships between processes
+PlotManagement "1" -- "0..*" ResourceManagement : requires >
+PlotManagement "1" -- "1..*" UserManagement : managed by >
+PlotManagement "1" -- "0..*" EventManagement : hosts >
+
+ResourceManagement "1" -- "1..*" UserManagement : tracked by >
+ResourceManagement "1" -- "0..*" EventManagement : allocated to >
+
+EventManagement "1" -- "1..*" UserManagement : organized by >
+
+' Define relationships with entities
+PlotManagement "1" -- "0..*" Plot : manages >
+ResourceManagement "1" -- "0..*" Resource : tracks >
+EventManagement "1" -- "0..*" Event : coordinates >
+UserManagement "1" -- "0..*" User : administers >
+
+' Define cross-entity relationships
+Plot "0..*" -- "1" User : assigned to >
+Resource "0..*" -- "1..*" User : used by >
+Event "0..*" -- "0..*" User : participated by >
+Plot "1" -- "0..*" Resource : uses >
+Event "1" -- "0..*" Resource : requires >
+
+note "All processes interact with\nUserManagement for\nauthorization and tracking" as N1
+
+note "ResourceManagement monitors\nusage across all other processes" as N2
+
+note "Events can be associated\nwith specific plots or\nbe garden-wide" as N3
+
+@enduml 

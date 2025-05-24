@@ -1,0 +1,62 @@
+@startuml
+!define BPMN(x) <b>x</b>
+title Resource Management Process
+
+|Resource Manager|
+start
+:Monitor Inventory Levels;
+
+|System|
+:Check Against Thresholds;
+if (Below Threshold?) then (yes)
+  :Generate Alert;
+  |Resource Manager|
+  :Initiate Restock Process;
+else (no)
+  :Log Status;
+endif
+
+|Plot Holder|
+:Submit Resource Request;
+
+|System|
+:Validate Request;
+:Check Availability;
+if (Available?) then (yes)
+  :Calculate Allocation;
+else (no)
+  :Add to Waiting List;
+  :Notify Plot Holder;
+  stop
+endif
+
+|Resource Manager|
+:Review Request;
+if (Approved?) then (yes)
+  :Allocate Resources;
+else (no)
+  :Reject Request;
+  :Provide Reason;
+  stop
+endif
+
+|System|
+:Update Inventory;
+:Log Transaction;
+:Generate Receipt;
+
+|Plot Holder|
+:Receive Resources;
+:Confirm Receipt;
+
+|System|
+fork
+  :Update Usage Statistics;
+fork again
+  :Generate Reports;
+fork again
+  :Schedule Next Check;
+end fork
+stop
+
+@enduml 

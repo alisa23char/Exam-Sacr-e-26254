@@ -1,0 +1,53 @@
+@startuml
+!define BPMN(x) <b>x</b>
+title Plot Management Process
+
+|Community Member|
+start
+:Submit Plot Request;
+:Provide Required Documentation;
+
+|System|
+:Check Plot Availability;
+:Validate Requirements;
+if (Requirements Met?) then (yes)
+  :Queue for Admin Review;
+else (no)
+  :Notify Member of Issues;
+  stop
+endif
+
+|Garden Administrator|
+:Review Application;
+if (Approved?) then (yes)
+  :Assign Plot;
+  :Set Initial Status;
+else (no)
+  :Add to Waiting List;
+endif
+
+|System|
+:Update Plot Status;
+:Send Notification;
+:Generate Access Credentials;
+
+|Community Member|
+:Receive Plot Assignment;
+:Begin Plot Maintenance;
+
+|#AntiqueWhite|Garden Administrator|
+fork
+  :Regular Inspections;
+fork again
+  :Resource Monitoring;
+fork again
+  :Compliance Checks;
+end fork
+:Update Plot Status;
+
+|System|
+:Generate Reports;
+:Send Notifications;
+stop
+
+@enduml 

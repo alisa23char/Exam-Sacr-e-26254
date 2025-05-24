@@ -1,0 +1,128 @@
+@startuml
+!define ENTITY(name) class name << Entity >>
+!define RELATIONSHIP(name) class name << Relationship >>
+
+title Community Garden Management System - Entity Relationship Model
+
+' Primary Entities
+ENTITY(Garden) {
+  + garden_id (PK)
+  + garden_name
+  + location
+  + total_plots
+  + created_date
+  + status
+}
+
+ENTITY(Plot) {
+  + plot_id (PK)
+  + garden_id (FK)
+  + plot_number
+  + size
+  + location
+  + status
+  + created_date
+}
+
+ENTITY(User) {
+  + user_id (PK)
+  + first_name
+  + last_name
+  + email
+  + phone
+  + join_date
+  + status
+  + user_type
+}
+
+ENTITY(Resource) {
+  + resource_id (PK)
+  + resource_name
+  + category
+  + quantity_available
+  + unit_of_measure
+  + minimum_threshold
+  + status
+}
+
+ENTITY(Plant) {
+  + plant_id (PK)
+  + plant_name
+  + species
+  + growing_season
+  + days_to_harvest
+  + spacing_requirements
+  + sunlight_needs
+}
+
+ENTITY(Event) {
+  + event_id (PK)
+  + garden_id (FK)
+  + event_name
+  + event_type
+  + event_date
+  + max_participants
+  + status
+  + description
+}
+
+' Relationship Entities
+ENTITY(PlotAssignment) {
+  + assignment_id (PK)
+  + plot_id (FK)
+  + user_id (FK)
+  + start_date
+  + end_date
+  + status
+}
+
+ENTITY(PlotPlant) {
+  + plot_plant_id (PK)
+  + plot_id (FK)
+  + plant_id (FK)
+  + planting_date
+  + expected_harvest_date
+  + status
+  + quantity
+}
+
+ENTITY(ResourceUsage) {
+  + usage_id (PK)
+  + resource_id (FK)
+  + plot_id (FK)
+  + user_id (FK)
+  + quantity_used
+  + usage_date
+  + purpose
+}
+
+ENTITY(EventParticipant) {
+  + participation_id (PK)
+  + event_id (FK)
+  + user_id (FK)
+  + registration_date
+  + status
+  + role
+}
+
+' Relationships
+Garden "1" -- "0..*" Plot
+Garden "1" -- "0..*" Event
+
+Plot "1" -- "0..*" PlotAssignment
+Plot "1" -- "0..*" PlotPlant
+Plot "1" -- "0..*" ResourceUsage
+
+User "1" -- "0..*" PlotAssignment
+User "1" -- "0..*" ResourceUsage
+User "1" -- "0..*" EventParticipant
+
+Resource "1" -- "0..*" ResourceUsage
+
+Plant "1" -- "0..*" PlotPlant
+
+Event "1" -- "0..*" EventParticipant
+
+note "All entities include\naudit fields:\n- created_by\n- created_date\n- modified_by\n- modified_date" as N1
+
+@enduml 

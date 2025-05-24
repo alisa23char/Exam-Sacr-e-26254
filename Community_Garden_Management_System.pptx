@@ -1,0 +1,135 @@
+Title Slide:
+Community Garden Management System
+A PL/SQL-based Solution for Garden Management
+---
+
+Slide 2: Overview
+• Three Main Packages:
+  1. Garden Management (garden_mgmt)
+  2. Resource Management (resource_mgmt)
+  3. Event Management (event_mgmt)
+• Comprehensive Error Handling
+• Security Integration
+• Audit Logging
+• Transaction Management
+---
+
+Slide 3: Garden Management Package
+Functions:
+• get_garden_stats
+• get_available_plots
+• get_user_plots
+
+Procedures:
+• assign_plot
+• release_plot
+
+Error Codes: -20601 to -20699
+---
+
+Slide 4: Resource Management Package
+Functions:
+• get_resource_status
+• get_resource_history
+• check_resource_availability
+
+Procedures:
+• reserve_resource
+• return_resource
+
+Error Codes: -20701 to -20799
+---
+
+Slide 5: Event Management Package
+Functions:
+• get_upcoming_events
+• get_event_participants
+• check_event_capacity
+
+Procedures:
+• create_event
+• register_participant
+• cancel_registration
+
+Error Codes: -20801 to -20899
+---
+
+Slide 6: Common Features
+• Role-based Access Control
+• Weekend/Holiday Restrictions
+• Audit Trail Maintenance
+• Detailed Logging
+• Input Validation
+• Status Tracking
+• Transaction Safety
+---
+
+Slide 7: Installation Process
+1. Database Creation Scripts:
+   • create_database.sql
+   • create_procedures.sql
+   • create_triggers.sql
+   • create_tables_and_data.sql
+   • insert_holidays.sql
+   • create_functions.sql
+   • create_materialized_views.sql
+
+2. Package Installation:
+   • garden_management_pkg.sql
+   • resource_management_pkg.sql
+   • event_management_pkg.sql
+---
+
+Slide 8: Usage Examples
+Garden Management:
+```sql
+-- Get garden statistics
+DECLARE
+    v_result SYS_REFCURSOR;
+BEGIN
+    v_result := garden_mgmt.get_garden_stats(1);
+END;
+```
+
+Resource Management:
+```sql
+-- Reserve resources
+BEGIN
+    resource_mgmt.reserve_resource(
+        p_resource_id => 1,
+        p_user_id => 1,
+        p_quantity => 2,
+        p_start_date => SYSDATE,
+        p_end_date => SYSDATE + 7,
+        p_purpose => 'Garden maintenance'
+    );
+END;
+```
+---
+
+Slide 9: Contributing
+How to Contribute:
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+License: MIT License
+---
+
+Slide 10: Future Enhancements
+Planned Features:
+• Mobile Application Integration
+• Weather API Integration
+• Automated Irrigation System
+• Community Forum
+• Resource Sharing Marketplace
+---
+
+Slide 11: Contact Information
+For more information:
+• GitHub Repository
+• Documentation
+• Support Channels
+• Community Forums 
